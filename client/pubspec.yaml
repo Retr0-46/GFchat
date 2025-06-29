@@ -1,0 +1,15 @@
+name: frontend
+environment:
+  sdk: ">=2.17.0 <4.0.0"
+
+dependencies:
+  flutter_lints: ^2.0.0
+  flutter_test:
+    sdk: flutter
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  http: ^1.4.0
+
+flutter:
+  uses-material-design: true
