@@ -1,20 +1,20 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
+
+	"server/db"
+	"server/handlers"
 )
 
 func main() {
-	// Обработка запроса на добавление нового сообщения
-	http.HandleFunc("/send_message", addMessageHandler)
+	db.Init()
 
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-    fmt.Fprintln(w, "Сервер работает! Перейдите на /send_message для отправки сообщений.")
-	})
+	http.HandleFunc("/register", handlers.Register)
+	http.HandleFunc("/login", handlers.Login)
+	http.HandleFunc("/ws", handlers.WebSocketHandler)
 
-	// Запуск сервера
-	fmt.Println("Server listening port 8000...")
-	log.Fatal(http.ListenAndServe("0.0.0.0:8000", nil))
+	log.Println("Запущен сервер на http://localhost:8080 ...")
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }

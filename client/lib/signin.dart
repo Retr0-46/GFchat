@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'registration.dart';
+import 'package:client/services/api_service.dart';
 
 class SigninPage extends StatelessWidget {
   const SigninPage({super.key});
@@ -76,7 +77,8 @@ class SigninPage extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
+                    final login = loginController.text;
                     final password1 = passwordController1.text;
                     final password2 = passwordController2.text;
 
@@ -88,6 +90,19 @@ class SigninPage extends StatelessWidget {
                         )
                       );
                       return;
+                    }
+
+                    final error = await ApiService.register(login, password1);
+                    print(error);
+                    if (error == null) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text("Успешная регистрация"), backgroundColor: Colors.green),
+                      );
+                      Navigator.pop(context); // Возврат на экран входа
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text(error), backgroundColor: Colors.red),
+                        );
                     }
                   },
                   style: ElevatedButton.styleFrom(

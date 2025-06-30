@@ -1,3 +1,4 @@
+import 'package:client/services/api_service.dart';
 import 'package:flutter/material.dart';
 import 'signin.dart';
 
@@ -62,8 +63,21 @@ class RegisterPage extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {
-                    // TODO: handle login
+                  onPressed: () async {
+                    final login = loginController.text;
+                    final password = passwordController.text;
+
+                    final error = await ApiService.login(login, password);
+                    if (error == null) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text("Вход выполнен"), backgroundColor: Colors.green),
+                      );
+                      // TODO: Навигация в чат
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(error), backgroundColor: Colors.red),
+                      );
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 14),

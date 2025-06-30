@@ -1,4 +1,4 @@
-name: frontend
+name: client
 environment:
   sdk: ">=2.17.0 <4.0.0"
 
